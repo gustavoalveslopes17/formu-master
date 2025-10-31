@@ -118,7 +118,68 @@
       document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
     }
   </script>
+  <script>
+  // Máscara CPF
+  document.getElementById('cpf').addEventListener('input', function (e) {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length > 11) value = value.slice(0, 11);
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    e.target.value = value;
+  });
+
+  // Máscara CEP
+  document.getElementById('cep').addEventListener('input', function (e) {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length > 8) value = value.slice(0, 8);
+    value = value.replace(/(\d{5})(\d)/, '$1-$2');
+    e.target.value = value;
+  });
+
+  // Validação CPF
+  function validarCPF(cpf) {
+    cpf = cpf.replace(/[^\d]+/g, '');
+    if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
+    let soma = 0;
+    for (let i = 0; i < 9; i++) soma += parseInt(cpf.charAt(i)) * (10 - i);
+    let resto = 11 - (soma % 11);
+    if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf.charAt(9))) return false;
+    soma = 0;
+    for (let i = 0; i < 10; i++) soma += parseInt(cpf.charAt(i)) * (11 - i);
+    resto = 11 - (soma % 11);
+    if (resto === 10 || resto === 11) resto = 0;
+    return resto === parseInt(cpf.charAt(10));
+  }
+
+  // Validação CEP
+  function validarCEP(cep) {
+    return /^\d{5}-\d{3}$/.test(cep);
+  }
+
+  // Validação geral
+  function validarFormulario() {
+    const cpf = document.getElementById('cpf').value;
+    const cep = document.getElementById('cep').value;
+    const erro = document.getElementById('erro');
+    erro.textContent = '';
+
+    if (!validarCPF(cpf)) {
+      erro.textContent = 'CPF inválido. Verifique o número digitado.';
+      return false;
+    }
+
+    if (!validarCEP(cep)) {
+      erro.textContent = 'CEP inválido. Use o formato 00000-000.';
+      return false;
+    }
+
+    return true;
+  }
+</script>
 </body>
 </html>
+
 
 
