@@ -5,22 +5,114 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FormuMaster</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+      color: #333;
+    }
+
+    header {
+      background: #0077cc;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    nav {
+      margin-top: 1rem;
+    }
+
+    nav button {
+      margin: 0 0.5rem;
+      padding: 0.5rem 1rem;
+      background: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    nav button:hover {
+      background: #e0e0e0;
+    }
+
+    main {
+      padding: 2rem;
+    }
+
+    form {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 500px;
+      margin: auto;
+    }
+
+    form input, form textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    form button {
+      background: #0077cc;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    form button:hover {
+      background: #005fa3;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #ddd;
+      margin-top: 2rem;
+    }
+  </style>
 </head>
 <body>
   <header>
     <h1>FormuMaster</h1>
     <nav>
-      <button data-route="home">Início</button>
-      <button data-route="form">Formulário</button>
+      <button onclick="scrollToSection('home')">Início</button>
+      <button onclick="scrollToSection('formulario')">Formulário</button>
     </nav>
   </header>
 
-  <main id="app"></main>
+  <main>
+    <section id="home">
+      <h2>Bem-vindo ao FormuMaster</h2>
+      <p>Preencha nosso formulário abaixo para entrar em contato conosco.</p>
+    </section>
+
+    <section id="formulario">
+      <h2>Formulário de Contato</h2>
+      <form action="https://formspree.io/f/your-form-id" method="POST">
+        <input type="text" name="nome" placeholder="Seu nome" required />
+        <input type="email" name="email" placeholder="Seu e-mail" required />
+        <textarea name="mensagem" rows="5" placeholder="Sua mensagem" required></textarea>
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
+  </main>
 
   <footer>
     <p>&copy; 2025 FormuMaster</p>
   </footer>
 
-  <script src="app.js"></script>
+  <script>
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
 </body>
 </html>
